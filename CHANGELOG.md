@@ -2,6 +2,19 @@
 
 All notable changes are recorded here. The project follows [Semantic Versioning](https://semver.org/): a change to a gate, a threshold or a file format that makes an earlier pass fail is a major change and needs a decision record.
 
+## Unreleased
+
+Small fixes left from the review of 2026-10-24, and a measure for the variety bar. No gate or threshold changes.
+
+- **The variety bar has an instrument.** `tools/bench/variety.mjs` renders each build's landing page and reads its macrostructure from the DOM: the top-level blocks in order, each typed by what it holds. It compares pages from different briefs within each configuration by Jaccard similarity over the block and component sequences, and gives the difference between configurations with a 95% interval from a bootstrap over briefs. `record-round.mjs` stores its file with the round. The bar is still not measured: the build rounds cover 4 briefs and it needs 10, and image-embedding similarity is not computed. The ledger's `macrostructure_measured` is now described as reserved, since no command writes it. `direction-process.md` no longer says the ledger feeds convergence monitoring.
+- **`grade-build.mjs` and `variety.mjs` share the code that serves a built site** (`tools/bench/lib.mjs`). A regrade of a server-app run gives the same metrics as before.
+
+- **A check that waits stays marked through a merge.** `time_bound` was dropped when its candidate merged into another, so the verifier could meet that check late. It is now documented for inspectors in `finding-records.md` and in the evaluator output and finding schemas.
+- **The READMEs state what an audit costs:** 39 to 68 minutes and $25 to $37 for a standard audit in rounds 4 to 6, against 2 to 4 minutes and about $1 for a plain session. `quick` depth has not been measured. Quick start says the review request starts a standard audit.
+- **Two figures in `evals/README.md` are qualified.** The 255 black-box subagents include 30 in the four runs cut off before the end, and the skill's lead on the deterministic defects of round 5 is partly built in, since those defects were calibrated against its own detectors.
+- **`ARCHITECTURE.md` names the packet folders as the code writes them** (`packets/<role>-<n>/`).
+- **The lint CLI test passes the fixture as `--root`,** so a `.ui-evaluator` folder at the repo root no longer changes its result.
+
 ## 3.0.1 — 2026-11-04
 
 The rest of the review of 2026-10-24: a verifier that judges a split's parts in one pass, `uie next`, a test of the passing path, and the honesty bar stated against the current lint. No gate or threshold changes, and file formats change only by addition (a part in `split_into` may carry its own verdict; lint records the files it scanned). One command-line behaviour is stricter: an option one edit from a known option is now an error. No agent-level round has run on 3.0.0 or this version yet; the release bars that remain unmet are listed in `evals/README.md`.
